@@ -16,7 +16,7 @@ uStart=$(($bEnd+1))
 uEnd=21
 
 
-while getopts ":n:s:q:c:" options; do
+while getopts ":n:s:c:" options; do
     case $options in
     	n ) name=$OPTARG;;
         s ) species=$OPTARG;;
