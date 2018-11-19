@@ -1,5 +1,5 @@
 # SNARE_prep
-dropseq-based single nuclei genomic accessibility and RNA expression (SNARE-seq) preprocessing pipeline
+dropseq-based **S**ingle **N**uclei genomic **A**ccessibility and **R**NA **E**xpression (SNARE-seq) preprocessing pipeline
 
 ## Dependency
 [Drop-seq_tools-1.13/Picard](https://github.com/broadinstitute/Drop-seq/releases)
