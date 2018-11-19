@@ -8,6 +8,8 @@ dropseq-based single nuclei genomic accessibility and RNA expression (SNARE-seq)
 
 python package(pysam)
 
+fastx_trimmer(http://hannonlab.cshl.edu/fastx_toolkit/index.html)
+
 ## Read(fastq) Structure 
 Read1(30 bp): [12-bp barcode][9-bp UMI]TTTTTTTTT
 
