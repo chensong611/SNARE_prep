@@ -8,7 +8,12 @@ dropseq-based single nuclei genomic accessibility and RNA expression (SNARE-seq)
 
 python package(pysam)
 
+## Read(fastq) Structure 
+Read1(30 bp): [12-bp barcode][9-bp UMI]TTTTTTTTT
 
+Read2(75 bp): Nextera Read1
+
+Read3(75 bp): Nextera Read2
 
 ##  Usage
 `SNARE_Prep.sh -n $name -s $species -c $cells`
