@@ -5,10 +5,12 @@ dropseq-based **S**ingle **N**uclei genomic **A**ccessibility and **R**NA **E**x
 [Drop-seq_tools-1.13/Picard](https://github.com/broadinstitute/Drop-seq/releases)
 
 [ATAC-seq pipeline](https://github.com/kundajelab/atac_dnase_pipelines#pipeline)
+
 [Reference(mm10,hg38)](https://github.com/kundajelab/atac_dnase_pipelines#genome-data)
+
 [.dict file](https://broadinstitute.github.io/picard/command-line-overview.html#CreateSequenceDictionary)
 
-python package(pysam)
+[pysam](https://github.com/pysam-developers/pysam)
 
 [fastx_trimmer](http://hannonlab.cshl.edu/fastx_toolkit/index.html)
 
