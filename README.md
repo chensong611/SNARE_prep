@@ -4,11 +4,13 @@ dropseq-based **S**ingle **N**uclei genomic **A**ccessibility and **R**NA **E**x
 ## Dependency
 [Drop-seq_tools-1.13/Picard](https://github.com/broadinstitute/Drop-seq/releases)
 
-[ATAC-seq pipeline & Reference(mm10,hg38)](https://github.com/kundajelab/atac_dnase_pipelines#pipeline)
+[ATAC-seq pipeline](https://github.com/kundajelab/atac_dnase_pipelines#pipeline)
+[Reference(mm10,hg38)](https://github.com/kundajelab/atac_dnase_pipelines#genome-data)
+[.dict file](https://broadinstitute.github.io/picard/command-line-overview.html#CreateSequenceDictionary)
 
 python package(pysam)
 
-fastx_trimmer(http://hannonlab.cshl.edu/fastx_toolkit/index.html)
+[fastx_trimmer](http://hannonlab.cshl.edu/fastx_toolkit/index.html)
 
 ## Read(fastq) Structure 
 Read1(30 bp): [12-bp barcode][9-bp UMI]TTTTTTTTT
