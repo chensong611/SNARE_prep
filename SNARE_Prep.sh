@@ -46,11 +46,11 @@ mkdir -p DCA
 paste -d "" <(zcat $name'_R1_001.fastq.gz') <(zcat $name'_R2_001.fastq.gz' | sed '1~2s/.*//') > $name'_R12_001.fastq'
 
 #make a pair-ended bam file, extract cell barcode and UMI information and store it in bam tags (XC/XM), and convert it back to pair-end fastq files
-java -Xmx16g -jar $picard_dir/picard.jar FastqToSam FASTQ=$name'_R12_001.fastq' FASTQ2=$name'_R3_001.fastq.gz' SAMPLE_NAME=$name OUTPUT=/dev/stdout | \
+java -jar $picard_dir/picard.jar FastqToSam FASTQ=$name'_R12_001.fastq' FASTQ2=$name'_R3_001.fastq.gz' SAMPLE_NAME=$name OUTPUT=/dev/stdout | \
 $dropseq_dir/TagBamWithReadSequenceExtended I=/dev/stdin O=/dev/stdout SUMMARY=Reports/$name'.cell_tag_report.txt' BASE_RANGE=1-$bEnd BASE_QUALITY=10 BARCODED_READ=1 DISCARD_READ=false TAG_NAME=XC NUM_BASES_BELOW_QUALITY=1 | \
 $dropseq_dir/TagBamWithReadSequenceExtended I=/dev/stdin O=/dev/stdout SUMMARY=Reports/$name'.molecule_tag_report.txt' BASE_RANGE=$uStart-$uEnd BASE_QUALITY=10 BARCODED_READ=1 DISCARD_READ=false TAG_NAME=XM NUM_BASES_BELOW_QUALITY=1 | \
 tee $name'.unaligned.tagged.bam' | \
-java -Xmx16g -jar $picard_dir/picard.jar SamToFastq I=/dev/stdin FASTQ=$name'_R12_002.fastq' SECOND_END_FASTQ=$name'_R3_001.fastq'
+java -jar $picard_dir/picard.jar SamToFastq I=/dev/stdin FASTQ=$name'_R12_002.fastq' SECOND_END_FASTQ=$name'_R3_001.fastq'
 
 #remove read1 from merged single read
 fastx_trimmer -f 31 -i $name'_R12_002.fastq' -o $name'_R2_001.fastq' -Q33
@@ -60,12 +60,12 @@ bds $atac_dir/atac.bds -species $species -nth 16 -fastq1_1 $name'_R2_001.fastq' 
 
 #convert narrowPeak file to interval_list file
 gunzip ATAC/$name/peak/macs2/overlap/conservative_set/$name'_rep1-pr.naive_overlap.filt.narrowPeak.gz'
-java -Xmx16g -jar $picard_dir/picard.jar BedToIntervalList I=ATAC/$name/peak/macs2/overlap/conservative_set/$name'_rep1-pr.naive_overlap.filt.narrowPeak' O=$name'.interval_list' SD=$ref_dir$ref_dict
+java -jar $picard_dir/picard.jar BedToIntervalList I=ATAC/$name/peak/macs2/overlap/conservative_set/$name'_rep1-pr.naive_overlap.filt.narrowPeak' O=$name'.interval_list' SD=$ref_dir$ref_dict
 
 #tag reads with peaks called, sort in query name order and retrive barcode/UMI information.
 $dropseq_dir/TagReadWithInterval I=ATAC/$name/align/rep1/$name'_R2_001.trim.PE2SE.bam' O=/dev/stdout LOCI=$name'.interval_list' TAG=ZI | \
-java -Xmx16g -jar $picard_dir/picard.jar SortSam I=/dev/stdin O=$name'.sorted.interval.bam' SO=queryname TMP_DIR=Tmp
-java -Xmx16g -jar $picard_dir/picard.jar MergeBamAlignment REFERENCE_SEQUENCE=$ref_dir$ref_fasta UNMAPPED_BAM=$name'.unaligned.tagged.bam' ALIGNED_BAM=$name'.sorted.interval.bam' O=$name'.tagged.interval.bam' INCLUDE_SECONDARY_ALIGNMENTS=false PAIRED_RUN=true ATTRIBUTES_TO_RETAIN=ZI TMP_DIR=Tmp
+java -jar $picard_dir/picard.jar SortSam I=/dev/stdin O=$name'.sorted.interval.bam' SO=queryname TMP_DIR=Tmp
+java -jar $picard_dir/picard.jar MergeBamAlignment REFERENCE_SEQUENCE=$ref_dir$ref_fasta UNMAPPED_BAM=$name'.unaligned.tagged.bam' ALIGNED_BAM=$name'.sorted.interval.bam' O=$name'.tagged.interval.bam' INCLUDE_SECONDARY_ALIGNMENTS=false PAIRED_RUN=true ATTRIBUTES_TO_RETAIN=ZI TMP_DIR=Tmp
 
 #sort pair-end bam file in query name and convert it to single-end bam file labeled with peaks
 java -jar $picard_dir/picard.jar SortSam I=$name'.tagged.interval.bam' O=$name'.paired.interval.bam' SO=queryname TMP_DIR=Tmp
