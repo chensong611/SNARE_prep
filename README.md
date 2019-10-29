@@ -1,5 +1,5 @@
 # SNARE_prep
-dropseq-based **S**ingle **N**uclei genomic **A**ccessibility and **R**NA **E**xpression-seq (SNARE-seq) preprocessing pipeline
+The pipeline to process chromatin accessibility data from DropSeq-based **S**ingle **N**uclei genomic **A**ccessibility and **R**NA **E**xpression-seq (SNARE-seq) experiment.
 
 ## Dependency
 [Drop-seq_tools-1.13/Picard](https://github.com/broadinstitute/Drop-seq/releases)
